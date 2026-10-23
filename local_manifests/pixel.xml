@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <!-- Synced automatically so WITH_GMS builds have all required Pixel packages -->
+  <remote name="avium-pixel"
+          fetch="https://github.com/AviumUI"
+          revision="refs/heads/avium-16.2" />
+  <remote name="pixelos-gitlab"
+          fetch="https://gitlab.com"
+          revision="refs/heads/sixteen-qpr2" />
+
+  <project path="vendor/pixel/clocks" name="proprietary_vendor_pixel_clocks" remote="avium-pixel" clone-depth="1" />
+  <project path="vendor/pixel/gms"    name="proprietary_vendor_pixel_gms"    remote="avium-pixel" clone-depth="1" />
+  <project path="vendor/pixel/sounds" name="PixelOS-AOSP/proprietary_vendor_pixel_sounds" remote="pixelos-gitlab" clone-depth="1" />
+</manifest>

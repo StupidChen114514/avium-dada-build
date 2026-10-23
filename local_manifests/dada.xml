@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <!-- Xiaomi 15 (dada) device trees, maintained by dada-devel -->
+  <remote name="dada"
+          fetch="https://github.com/dada-devel"
+          revision="refs/heads/lineage-23.2" />
+
+  <project path="device/xiaomi/dada"                  name="device_xiaomi_dada"                  remote="dada" />
+  <project path="device/xiaomi/sm8750-common"         name="device_xiaomi_sm8750-common"         remote="dada" />
+  <project path="device/xiaomi/dada-kernel"           name="device_xiaomi_dada-kernel"           remote="dada" />
+  <project path="vendor/xiaomi/dada"                  name="vendor_xiaomi_dada"                  remote="dada" />
+  <project path="vendor/xiaomi/sm8750-common"         name="vendor_xiaomi_sm8750-common"         remote="dada" />
+  <project path="vendor/xiaomi/dada-firmware"         name="vendor_xiaomi_dada-firmware"         remote="dada" />
+  <project path="hardware/xiaomi"                     name="android_hardware_xiaomi"             remote="dada" />
+
+  <!-- Dolby audio (Pong-Development based, branch 16) -->
+  <project path="hardware/dolby"                      name="hardware_dolby"                      remote="dada" revision="16" />
+
+  <!-- Replace upstream repos with the dada forks where device-specific changes are required -->
+  <remove-project name="LineageOS/android_hardware_lineage_interfaces" />
+  <project path="hardware/lineage/interfaces"         name="android_hardware_lineage_interfaces" remote="dada" />
+
+  <remove-project name="LineageOS/android_vendor_qcom_opensource_vibrator" />
+  <project path="vendor/qcom/opensource/vibrator"     name="android_vendor_qcom_opensource_vibrator" remote="dada" />
+</manifest>

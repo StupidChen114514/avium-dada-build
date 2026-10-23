@@ -1,0 +1,62 @@
+main:
+  push:
+    - name: aviumui-dada
+      runner:
+        tags: cnb:arch:amd64
+        cpus: 64
+      docker:
+        build: .cnb/Dockerfile
+        volumes:
+          - ./avium:read-write
+          - ./ccache:read-write
+      env:
+        JOBS: "32"
+        BUILD_TYPE: userdebug
+        WITH_GMS: "true"
+      stages:
+        - name: 同步源码
+          timeout: 10h
+          script: bash scripts/sync.sh
+        - name: 编译 AviumUI
+          timeout: 10h
+          script: bash scripts/build.sh
+        - name: 收集产物
+          script: bash scripts/collect.sh
+
+"$":
+  tag_push:
+    - name: aviumui-dada-release
+      runner:
+        tags: cnb:arch:amd64
+        cpus: 64
+      docker:
+        build: .cnb/Dockerfile
+        volumes:
+          - ./avium:read-write
+          - ./ccache:read-write
+      env:
+        JOBS: "32"
+        BUILD_TYPE: userdebug
+        WITH_GMS: "true"
+      stages:
+        - name: 创建 Release
+          type: git:release
+          options:
+            tag: $CNB_BRANCH
+            title: AviumUI dada $CNB_BRANCH
+            description: AviumUI 16.2 build for Xiaomi 15 (dada)
+        - name: 同步源码
+          timeout: 10h
+          script: bash scripts/sync.sh
+        - name: 编译 AviumUI
+          timeout: 10h
+          script: bash scripts/build.sh
+        - name: 收集产物
+          script: bash scripts/collect.sh
+        - name: 上传产物到 Release
+          image: cnbcool/attachments:latest
+          settings:
+            attachments:
+              - "./artifacts/*.zip"
+              - "./artifacts/*.img"
+              - "./artifacts/SHA256SUMS"
